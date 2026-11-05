@@ -1,20 +1,28 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import pubThumbnail from "../static/images/pub1.png";
 import profilePhoto from "../static/images/PFP.jpeg";
+import navIcon from "../static/images/icon.png";
 
 type IconName =
   | "arrow"
   | "bot"
+  | "camera"
+  | "code"
   | "cpu"
+  | "database"
   | "github"
   | "google"
+  | "image"
   | "graph"
   | "linkedin"
   | "mail"
   | "moon"
+  | "orbit"
   | "pin"
+  | "puzzle"
   | "resume"
-  | "sun";
+  | "sun"
+  | "wave";
 
 type IconProps = {
   name: IconName;
@@ -51,6 +59,31 @@ const iconPaths: Record<IconName, ReactNode> = {
       <path d="m22 7-8.97 5.7a2 2 0 0 1-2.06 0L2 7" />
     </>
   ),
+  code: (
+    <>
+      <path d="m8 6-6 6 6 6" />
+      <path d="m16 6 6 6-6 6" />
+    </>
+  ),
+  image: (
+    <>
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <circle cx="9" cy="9" r="2" />
+      <path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21" />
+    </>
+  ),
+  puzzle: (
+    <>
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <path d="M3 12h18M12 3v18" />
+      <path d="M7 7h1M16 16h1" />
+    </>
+  ),
+  wave: (
+    <>
+      <path d="M2 12h3l3-7 4 14 3-7h7" />
+    </>
+  ),
   cpu: (
     <>
       <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -72,12 +105,32 @@ const iconPaths: Record<IconName, ReactNode> = {
       <circle cx="12" cy="10" r="3" />
     </>
   ),
+  camera: (
+    <>
+      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </>
+  ),
+  database: (
+    <>
+      <ellipse cx="12" cy="5" rx="8" ry="3" />
+      <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5" />
+      <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" />
+    </>
+  ),
   bot: (
     <>
       <rect x="4" y="8" width="16" height="12" rx="2" />
       <path d="M12 8V4M8 4h8" />
       <path d="M9 13h.01M15 13h.01" />
       <path d="M9.5 16.5h5" />
+    </>
+  ),
+  orbit: (
+    <>
+      <circle cx="12" cy="12" r="3" />
+      <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-25 12 12)" />
+      <circle cx="20.5" cy="7.5" r="1.2" />
     </>
   ),
   moon: <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z" />,
@@ -117,7 +170,7 @@ const socials: { label: string; detail: string; icon: IconName; href: string }[]
   { label: "GitHub", detail: "@uday-kalyan-s", icon: "github", href: "https://github.com/uday-kalyan-s" },
   { label: "Scholar", detail: "Publications", icon: "google", href: "https://scholar.google.com/citations?user=CNqSZP0AAAAJ&hl=en" },
   { label: "LinkedIn", detail: "Connect", icon: "linkedin", href: "https://www.linkedin.com/in/uday-kalyan-sreenivasa-196550203" },
-  { label: "Résumé", detail: "View PDF", icon: "resume", href: "#" },
+  { label: "Résumé", detail: "View PDF", icon: "resume", href: "../static/pdfs/CV.pdf" },
 ];
 
 const publications = [
@@ -138,10 +191,13 @@ const projects: {
   icon: IconName;
   title: string;
   type: string;
-  status: "Active" | "Complete";
+  status: "Active" | "Complete" | "Stale";
   year: string;
   description: string;
   stack: string;
+  href?: string;
+  linkLabel?: string;
+  linkNote?: string;
 }[] = [
   {
     icon: "cpu",
@@ -151,6 +207,7 @@ const projects: {
     year: "2024",
     description: "Emulated 31 instructions of the chip 8 emulator with the screen and timer in Rust",
     stack: "Rust",
+    href: "https://github.com/uday-kalyan-s/chip8",
   },
   {
     icon: "graph",
@@ -160,6 +217,7 @@ const projects: {
     year: "2026",
     description: "With the help of a PhD in NUS, implemented PEGASUS algorithm on `open-rmf/mapf`",
     stack: "Python · NumPy",
+    href: "https://github.com/open-rmf/mapf/pulls?q=is%3Apr+author%3Auday-kalyan-s",
   },
   {
     icon: "pin",
@@ -169,6 +227,7 @@ const projects: {
     year: "2026",
     description: "Designed responsive layout and current Maintainer for `metakgp/WIMP` helping IIT KGP students",
     stack: "CSS . TypeScript",
+    href: "https://github.com/metakgp/wimp",
   },
   {
     icon: "bot",
@@ -178,6 +237,97 @@ const projects: {
     year: "2025",
     description: "Build a real-time warehouse navigation autonomous bot with capacity of scanning racks upto 2m",
     stack: "ROS2",
+    href: "https://criticic.github.io/InterIIT-TechMeet-Problem-Statements/InterIIT_Tech_Meet_PDFs/2025_MidPrep_Eternal.pdf",
+    linkLabel: "Problem statement",
+  },
+  {
+    icon: "database",
+    title: "Natural Language to SQL Translation",
+    type: "DBMS Course Project",
+    status: "Complete",
+    year: "2026",
+    description:
+      "Implemented, trained and tested `RAT-SQL` with relation-aware schema encoding and contextual BERT embeddings, reaching 67.0% exact-match on Spider across 200+ databases, with an AST-based grammar decoder generating executable SQL at up to 86.0% correctness",
+    stack: "Python · PyTorch · BERT",
+    href: "https://arxiv.org/abs/1911.04942",
+    linkLabel: "View paper",
+  },
+  {
+    icon: "camera",
+    title: "Multi-Frame Visual Odometry",
+    type: "AGV project",
+    status: "Complete",
+    year: "2025",
+    description:
+      "Built a classical monocular VO pipeline from scratch: feature matching across frames, triangulation of 3D landmarks, and 3D-to-2D pose estimation with `PnP` + RANSAC to track the camera trajectory",
+    stack: "Python · NumPy · OpenCV",
+    linkNote: "Code hidden to prevent task leakage",
+  },
+  {
+    icon: "database",
+    title: "SQLite from Scratch",
+    type: "CodeCrafters Challenge",
+    status: "Complete",
+    year: "2026",
+    description:
+      "Built a barebones SQLite engine in Python that reads the raw database file format directly, decoding page headers, varint-encoded record cells and the schema table to answer `.dbinfo`, `.tables`, `COUNT(*)` and `SELECT ... WHERE` queries",
+    stack: "Python",
+    href: "https://github.com/uday-kalyan-s/codecrafters-sqlite-python",
+  },
+  {
+    icon: "wave",
+    title: "Loss-Resilient Real-Time Transport",
+    type: "Test Assignment",
+    status: "Complete",
+    year: "2026",
+    description:
+      "Built a UDP sender and receiver with forward error correction behind a pluggable `Encoder` interface. Sliding-window Reed-Solomon over GF(256) with joint Gaussian-elimination decoding recovers back-to-back losses, keeping deadline misses under 0.3% at 100ms delay within a 2x bandwidth cap",
+    stack: "C · Python",
+    href: "https://github.com/uday-kalyan-s/plivo-systems-24AI10014",
+  },
+  {
+    icon: "image",
+    title: "Wasserstein GAN",
+    type: "DL foundations course project",
+    status: "Complete",
+    year: "2026",
+    description:
+      "Ported the reference `WassersteinGAN` implementation off deprecated PyTorch APIs and trained it on CIFAR-10, using the critic's Wasserstein estimate as a stable training signal",
+    stack: "Python · PyTorch",
+    href: "https://github.com/uday-kalyan-s/WassersteinGAN",
+  },
+  {
+    icon: "puzzle",
+    title: "Temple Trap Solver",
+    type: "Intro to AI course project",
+    status: "Complete",
+    year: "2025",
+    description:
+      "Solves the Temple Trap sliding-tile puzzle with nested `A*`: an outer search over tile moves and an inner search for pawn paths, guided by Manhattan distance to the exit",
+    stack: "Python",
+    href: "https://github.com/uday-kalyan-s/temple_trap_solver",
+  },
+  {
+    icon: "code",
+    title: "Rtreelox",
+    type: "Personal",
+    status: "Stale",
+    year: "2025",
+    description:
+      "A Rust tree-walk interpreter for Lox from Crafting Interpreters. Only the scanner and recursive-descent parser are done so far; evaluation is not implemented yet",
+    stack: "Rust",
+    href: "https://github.com/uday-kalyan-s/Rtreelox",
+  },
+  {
+    icon: "orbit",
+    title: "Asteroid Hazard Decision Support",
+    type: "Personal",
+    status: "Complete",
+    year: "2026",
+    description:
+      "Classifies near-Earth asteroids from NASA's NEO dataset as hazardous with an XGBoost pipeline (MICE imputation, class-imbalance weighting, F1-tuned threshold), served through a Streamlit dashboard with SHAP explanations, batch CSV scoring and what-if sensitivity analysis",
+    stack: "Python · XGBoost · SHAP · Streamlit",
+    href: "https://github.com/uday-kalyan-s/Asteroid-collision-Analytics",
   },
 ];
 
@@ -270,8 +420,8 @@ export default function App() {
     <div className="site-shell">
       <header className="nav-wrap">
         <nav aria-label="Primary navigation" className="nav">
-          <a className="wordmark" href="#home" aria-label="Uday Kalyan S, home"> 
-            UKS<span className="wordmark-dot">.</span>
+          <a className="wordmark" href="#home" aria-label="Uday Kalyan S, home">
+            <img className="wordmark-icon" src={navIcon} alt="" />
           </a>
           <div className="nav-actions" ref={navActionsRef}>
             <a
@@ -320,7 +470,6 @@ export default function App() {
                   src={profilePhoto}
                   alt="Portrait of Uday Kalyan S"
                 />
-                <div className="portrait-grid" />
               </div>
             </div>
 
@@ -389,7 +538,7 @@ export default function App() {
                     <Icon name={project.icon} size={20} />
                   </div>
                   <div className="project-status">
-                    <span className={project.status === "Active" ? "status-pill active" : "status-pill complete"}>
+                    <span className={`status-pill ${project.status.toLowerCase()}`}>
                       <i className="status-dot" />
                       {project.status}
                     </span>
@@ -403,9 +552,13 @@ export default function App() {
                 <p className="project-description">{renderDescription(project.description)}</p>
                 <div className="project-footer">
                   <span>{project.stack}</span>
-                  <a href="https://github.com/" aria-label={`View ${project.title} project`}>
-                    View project <Icon name="arrow" size={16} />
-                  </a>
+                  {project.href ? (
+                    <a href={project.href} aria-label={`${project.linkLabel ?? "View project"}: ${project.title}`}>
+                      {project.linkLabel ?? "View project"} <Icon name="arrow" size={16} />
+                    </a>
+                  ) : (
+                    <span className="project-link-note">{project.linkNote}</span>
+                  )}
                 </div>
               </article>
             ))}
@@ -414,7 +567,7 @@ export default function App() {
       </main>
 
       <footer>
-        <p>Designed with the help of Figma AI.</p>
+        <p>Designed for lost causes</p>
         <span>© 2026 Uday Kalyan S</span>
       </footer>
     </div>

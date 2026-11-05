@@ -28,20 +28,31 @@
   --line-strong: rgba(136, 192, 208, 0.38);
   --shadow: 0 26px 80px rgba(17, 21, 27, 0.2);
   --nav: rgba(41, 47, 58, 0.84);
+  --accent: var(--frost-2);
+  --accent-heading: var(--frost-1);
+  --accent-icon: var(--frost-3);
+  --success: var(--aurora-green);
+  --stale: var(--aurora-yellow);
 }
 
 :root[data-theme="light"] {
-  --canvas: var(--snow-3);
-  --surface: var(--snow-2);
+  --canvas: var(--snow-2);
+  --surface: var(--snow-3);
   --surface-raised: var(--snow-1);
-  --surface-soft: rgba(216, 222, 233, 0.7);
+  --surface-soft: rgba(216, 222, 233, 0.85);
   --text: var(--polar-2);
   --text-bright: var(--polar-1);
-  --text-muted: var(--polar-3);
-  --line: rgba(94, 129, 172, 0.2);
-  --line-strong: rgba(94, 129, 172, 0.42);
-  --shadow: 0 26px 80px rgba(46, 52, 64, 0.12);
-  --nav: rgba(236, 239, 244, 0.86);
+  --text-muted: #4c566a;
+  --line: rgba(76, 86, 106, 0.22);
+  --line-strong: rgba(76, 86, 106, 0.45);
+  --shadow: 0 26px 80px rgba(46, 52, 64, 0.16);
+  --nav: rgba(229, 233, 240, 0.88);
+  /* Frost/Aurora are tuned for Polar Night; deepen them for legibility on Snow Storm */
+  --accent: #4c6a92;
+  --accent-heading: var(--frost-4);
+  --accent-icon: var(--frost-4);
+  --success: #5f7f46;
+  --stale: #8a6a1c;
 }
 
 * {
@@ -74,7 +85,7 @@ a {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--frost-2);
+  outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
 
@@ -107,15 +118,28 @@ a:focus-visible {
 }
 
 .wordmark {
-  color: var(--text-bright);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  display: block;
+  border-radius: 50%;
 }
 
-.wordmark-dot,
+.wordmark-icon {
+  display: block;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--surface-raised);
+  object-fit: cover;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.wordmark:hover .wordmark-icon {
+  border-color: var(--accent);
+  box-shadow: 0 0 18px rgba(136, 192, 208, 0.25);
+}
+
 h1 span {
-  color: var(--frost-2);
+  color: var(--accent);
 }
 
 .nav-actions {
@@ -138,7 +162,7 @@ h1 span {
 }
 
 .nav-link.active {
-  color: var(--frost-2);
+  color: var(--accent);
   font-weight: 700;
 }
 
@@ -147,7 +171,7 @@ h1 span {
   left: 0;
   height: 2px;
   border-radius: 2px;
-  background: var(--frost-2);
+  background: var(--accent);
   transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), width 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
   will-change: transform, width;
 }
@@ -159,7 +183,7 @@ h1 span {
   border: 0;
   border-radius: 50%;
   background: transparent;
-  color: var(--frost-2);
+  color: var(--accent);
   cursor: pointer;
   transition: background 180ms ease, box-shadow 180ms ease;
 }
@@ -212,18 +236,6 @@ h1 span {
   box-shadow: var(--shadow);
 }
 
-.portrait-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  opacity: 0.18;
-  background-image:
-    linear-gradient(var(--line-strong) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-strong) 1px, transparent 1px);
-  background-size: 2.6rem 2.6rem;
-  mask-image: linear-gradient(to bottom, black, transparent 75%);
-}
-
 .portrait-photo {
   position: absolute;
   inset: 0;
@@ -236,7 +248,7 @@ h1 span {
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background: var(--aurora-green);
+  background: var(--success);
   box-shadow: 0 0 0 0.22rem rgba(163, 190, 140, 0.13);
 }
 
@@ -250,12 +262,12 @@ h1 span {
 }
 
 .section-number {
-  color: var(--frost-2);
+  color: var(--accent);
 }
 
 h1 {
   margin: 0;
-  color: var(--frost-1);
+  color: var(--accent-heading);
   font-size: clamp(4rem, 8vw, 7rem);
   font-weight: 600;
   line-height: 0.92;
@@ -283,13 +295,13 @@ h1 {
 .designation-list li::before {
   content: "—";
   margin-right: 0.7rem;
-  color: var(--frost-2);
+  color: var(--accent);
   font-weight: 600;
 }
 
 .designation-list strong,
 .about strong {
-  color: var(--frost-2);
+  color: var(--accent);
   font-weight: 500;
 }
 
@@ -297,7 +309,7 @@ h1 {
   max-width: 44rem;
   margin-top: 2.3rem;
   padding-left: 1.4rem;
-  border-left: 1px solid var(--frost-4);
+  border-left: 1px solid var(--accent-icon);
 }
 
 .about p {
@@ -337,11 +349,11 @@ h1 {
 
 .social-link:hover {
   background: var(--surface-soft);
-  color: var(--frost-2);
+  color: var(--accent);
 }
 
 .social-icon {
-  color: var(--frost-3);
+  color: var(--accent-icon);
 }
 
 .social-link strong,
@@ -385,7 +397,7 @@ h1 {
 
 .section-heading h2 {
   margin: 0;
-  color: var(--frost-1);
+  color: var(--accent-heading);
   font-size: clamp(2rem, 5vw, 3.35rem);
   font-weight: 600;
   letter-spacing: -0.045em;
@@ -433,7 +445,7 @@ h1 {
 
 .publication-copy h3 {
   margin: 0;
-  color: var(--frost-2);
+  color: var(--accent);
   font-size: 1.08rem;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -476,7 +488,7 @@ h1 {
   border: 1px solid var(--line-strong);
   border-radius: 99rem;
   background: var(--surface);
-  color: var(--frost-2);
+  color: var(--accent);
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.64rem;
   letter-spacing: 0.02em;
@@ -535,7 +547,7 @@ h1 {
   border: 1px solid var(--line-strong);
   border-radius: 0.55rem;
   background: var(--surface-raised);
-  color: var(--frost-2);
+  color: var(--accent);
 }
 
 .project-status {
@@ -566,7 +578,13 @@ h1 {
 .status-pill.active {
   background: rgba(163, 190, 140, 0.16);
   border-color: rgba(163, 190, 140, 0.45);
-  color: var(--aurora-green);
+  color: var(--success);
+}
+
+.status-pill.stale {
+  background: rgba(235, 203, 139, 0.14);
+  border-color: rgba(235, 203, 139, 0.45);
+  color: var(--stale);
 }
 
 .status-pill.complete {
@@ -587,7 +605,7 @@ h1 {
 
 .project-title-row h3 {
   margin: 0;
-  color: var(--frost-1);
+  color: var(--accent-heading);
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: -0.04em;
@@ -615,7 +633,7 @@ h1 {
   border: 1px solid var(--line-strong);
   border-radius: 0.35rem;
   background: var(--surface-raised);
-  color: var(--frost-2);
+  color: var(--accent);
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.78rem;
   white-space: nowrap;
@@ -639,9 +657,15 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  color: var(--frost-2);
+  color: var(--accent);
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+.project-footer .project-link-note {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-style: italic;
 }
 
 footer {
