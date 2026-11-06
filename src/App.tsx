@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import pubThumbnail from "../static/images/pub1.png";
 import profilePhoto from "../static/images/PFP.jpeg";
 import navIcon from "../static/images/icon.png";
-
+// commebt
 type IconName =
   | "arrow"
   | "bot"
