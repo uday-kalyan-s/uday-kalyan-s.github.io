@@ -206,7 +206,7 @@ const paperReviews: Project[] = [
     title: "Natural Language to SQL Translation",
     type: "DBMS Course Project",
     status: "Complete",
-    year: "2026",
+    year: "2025",
     description: "Trained and tested `RAT-SQL` on the Spider text-to-SQL benchmark.",
     href: "https://arxiv.org/abs/1911.04942",
     linkLabel: "View paper",
@@ -255,7 +255,7 @@ const paperReviews: Project[] = [
     title: "LIME: Why Should I Trust You?",
     type: "Introduction to ML course",
     status: "Complete",
-    year: "2026",
+    year: "2025",
     description: "Reviewed LIME, which explains individual predictions of any classifier with a local interpretable model.",
     href: "https://arxiv.org/abs/1602.04938",
     linkLabel: "View paper",
@@ -408,6 +408,8 @@ function ThemeButton({
     </button>
   );
 }
+
+const byYear = (items: Project[]) => [...items].sort((a, b) => Number(b.year) - Number(a.year));
 
 function linkText(project: Project) {
   if (project.linkLabel) return project.linkLabel.toLowerCase();
@@ -579,7 +581,7 @@ export default function App() {
         <section className="page-section projects-section" id="projects">
           <SectionHeading title="Projects" />
           <div className="project-grid">
-            {projects.map((project) => (
+            {byYear(projects).map((project) => (
               <ProjectCard project={project} key={project.title} />
             ))}
           </div>
@@ -591,7 +593,7 @@ export default function App() {
             Paper readings done for course projects.
           </p>
           <div className="project-grid">
-            {paperReviews.map((project) => (
+            {byYear(paperReviews).map((project) => (
               <ProjectCard project={project} key={project.title} />
             ))}
           </div>
