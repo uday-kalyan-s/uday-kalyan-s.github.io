@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import pubThumbnail from "../static/images/pub1.png";
 import profilePhoto from "../static/images/PFP.jpeg";
 import navIcon from "../static/images/icon.png";
@@ -409,36 +409,31 @@ function ThemeButton({
   );
 }
 
+function linkText(project: Project) {
+  if (project.linkLabel) return project.linkLabel.toLowerCase();
+  return project.href?.includes("github.com") ? "code" : "link";
+}
+
 function ProjectCard({ project }: { project: Project }) {
+  const meta = [project.type, project.year, project.stack].filter(Boolean).join(" · ");
   return (
-    <article className="project-card">
-    <div className="project-topline">
-      <div className="project-mark">
-        <Icon name={project.icon} size={20} />
-      </div>
-      <div className="project-status">
-        <span className={`status-pill ${project.status.toLowerCase()}`}>
-          {project.status}
-        </span>
-        <time>{project.year}</time>
-      </div>
-    </div>
-    <div className="project-title-row">
+    <article className="project-item">
       <h3>{project.title}</h3>
-      <span className="project-type">{project.type}</span>
-    </div>
-    <p className="project-description">{renderDescription(project.description)}</p>
-    <div className="project-footer">
-      <span>{project.stack}</span>
-      {project.href ? (
-        <a href={project.href} aria-label={`${project.linkLabel ?? "View project"}: ${project.title}`}>
-          {project.linkLabel ?? "View project"} <Icon name="arrow" size={16} />
-        </a>
-      ) : (
-        <span className="project-link-note">{project.linkNote}</span>
-      )}
-    </div>
-  </article>
+      <p className="project-meta">
+        {meta}
+        {project.status !== "Complete" ? ` · ${project.status.toLowerCase()}` : ""}
+      </p>
+      <p className="project-description">
+        {renderDescription(project.description)}{" "}
+        {project.href ? (
+          <a className="project-link" href={project.href} aria-label={`${linkText(project)}: ${project.title}`}>
+            [{linkText(project)}]
+          </a>
+        ) : project.linkNote ? (
+          <span className="project-link-note">({project.linkNote})</span>
+        ) : null}
+      </p>
+    </article>
   );
 }
 
@@ -455,8 +450,6 @@ function SectionHeading({ eyebrow, title }: { eyebrow?: string; title: string })
 export default function App() {
   const [isLight, setIsLight] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const navActionsRef = useRef<HTMLDivElement>(null);
-  const [indicator, setIndicator] = useState({ left: 0, top: 0, width: 0 });
 
   useEffect(() => {
     document.documentElement.dataset.theme = isLight ? "light" : "dark";
@@ -479,26 +472,6 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const updateIndicator = () => {
-      const container = navActionsRef.current;
-      if (!container) return;
-      const active = container.querySelector<HTMLElement>(".nav-link.active");
-      if (!active || active.offsetWidth === 0) {
-        setIndicator((previous) => ({ ...previous, width: 0 }));
-        return;
-      }
-      setIndicator({
-        left: active.offsetLeft,
-        top: active.offsetTop + active.offsetHeight + 6,
-        width: active.offsetWidth,
-      });
-    };
-    updateIndicator();
-    window.addEventListener("resize", updateIndicator);
-    return () => window.removeEventListener("resize", updateIndicator);
-  }, [activeSection]);
-
   return (
     <div className="site-shell">
       <header className="nav-wrap">
@@ -506,7 +479,7 @@ export default function App() {
           <a className="wordmark" href="#home" aria-label="Uday Kalyan S, home">
             <img className="wordmark-icon" src={navIcon} alt="" />
           </a>
-          <div className="nav-actions" ref={navActionsRef}>
+          <div className="nav-actions">
             <a
               className={activeSection === "home" ? "nav-link active" : "nav-link"}
               href="#home"
@@ -535,16 +508,6 @@ export default function App() {
             >
               Paper reviews
             </a>
-            <span
-              className="nav-indicator"
-              aria-hidden="true"
-              style={{
-                opacity: indicator.width === 0 ? 0 : 1,
-                transform: `translateX(${indicator.left}px)`,
-                top: indicator.top,
-                width: indicator.width,
-              }}
-            />
             <ThemeButton isLight={isLight} onClick={() => setIsLight((value) => !value)} />
           </div>
         </nav>
@@ -564,35 +527,30 @@ export default function App() {
             </div>
 
             <div className="hero-copy">
-              <p className="eyebrow">Hello, I’m</p>
-              <h1>Uday Kalyan S<span>.</span></h1>
+              <h1>Uday Kalyan S</h1>
               <ul className="designation-list">
-                <li>B.Tech Pre-Final Year in AI @ <strong>IIT Kharagpur</strong></li>
-                <li>Incoming SWE Intern @ <strong>Stripe</strong></li>
-                <li>Planning and Controls Head @ <strong>Autonomous Ground Vehicle Research Group</strong></li>
-                <li>Executive Head @ <strong>Kharagpur Open Source Society</strong></li>
+                <li>B.Tech (pre-final year) in AI, <strong>IIT Kharagpur</strong></li>
+                <li>Incoming SWE Intern, <strong>Stripe</strong></li>
+                <li>Planning &amp; Controls Head, <strong>AGV Research Group</strong></li>
+                <li>Executive Head, <strong>Kharagpur Open Source Society</strong></li>
               </ul>
-
-              <div className="about">
-                <p className="about-label">About me</p>
-                <p>
-                  I’m a student at <strong>IIT Kharagpur</strong>. I like working in <strong>Robotics</strong>, <strong>Deep Learning</strong>, <strong>Software development</strong> and anything and everything you can think of
-                </p>
-              </div>
-
-              <div className="social-grid">
-                {socials.map((social) => (
-                  <a className="social-link" href={social.href} key={social.label}>
-                    <span className="social-icon"><Icon name={social.icon} /></span>
-                    <span>
-                      <strong>{social.label}</strong>
-                      <small>{social.detail}</small>
-                    </span>
-                  </a>
+              <p className="social-row">
+                {socials.map((social, index) => (
+                  <span key={social.label}>
+                    {index > 0 ? <span className="social-sep" aria-hidden="true"> · </span> : null}
+                    <a href={social.href} title={social.detail}>
+                      {social.label}
+                    </a>
+                  </span>
                 ))}
-              </div>
+              </p>
             </div>
           </div>
+
+          <p className="about">
+            I’m a student at IIT Kharagpur. I like working in robotics, deep learning, software
+            development, and anything and everything you can think of.
+          </p>
         </section>
 
         <section className="page-section" id="publications">
