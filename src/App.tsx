@@ -187,18 +187,82 @@ const publications = [
   },
 ];
 
-const projects: {
+type Project = {
   icon: IconName;
   title: string;
   type: string;
   status: "Active" | "Complete" | "Stale";
   year: string;
   description: string;
-  stack: string;
+  stack?: string;
   href?: string;
   linkLabel?: string;
   linkNote?: string;
-}[] = [
+};
+
+const paperReviews: Project[] = [
+  {
+    icon: "database",
+    title: "Natural Language to SQL Translation",
+    type: "DBMS Course Project",
+    status: "Complete",
+    year: "2026",
+    description: "Trained and tested `RAT-SQL` on the Spider text-to-SQL benchmark.",
+    href: "https://arxiv.org/abs/1911.04942",
+    linkLabel: "View paper",
+  },
+  {
+    icon: "image",
+    title: "Wasserstein GAN",
+    type: "DL foundations course project",
+    status: "Complete",
+    year: "2026",
+    description:
+      "Ported the reference `WassersteinGAN` implementation off deprecated PyTorch APIs and trained it on CIFAR-10, using the critic's Wasserstein estimate as a stable training signal",
+    href: "https://github.com/uday-kalyan-s/WassersteinGAN",
+  },
+  {
+    icon: "cpu",
+    title: "M+: Extending MemoryLLM",
+    type: "Foundations of LLMs course",
+    status: "Active",
+    year: "2026",
+    description: "Reading M+ and preparing a vlog on it for the course.",
+    href: "https://arxiv.org/abs/2502.00592",
+    linkLabel: "View paper",
+  },
+  {
+    icon: "image",
+    title: "Network Dissection",
+    type: "Interpretable ML course",
+    status: "Active",
+    year: "2026",
+    description: "Reading Network Dissection, which labels individual units of a CNN with human-interpretable concepts.",
+    href: "https://arxiv.org/abs/1704.05796",
+    linkLabel: "View paper",
+  },
+  {
+    icon: "bot",
+    title: "Convex MPC for the MIT Cheetah",
+    type: "Robot Autonomy course",
+    status: "Active",
+    year: "2026",
+    description: "Reading convex model-predictive control for dynamic locomotion on the MIT Cheetah 3.",
+    linkNote: "No link yet",
+  },
+  {
+    icon: "graph",
+    title: "LIME: Why Should I Trust You?",
+    type: "Introduction to ML course",
+    status: "Complete",
+    year: "2026",
+    description: "Reviewed LIME, which explains individual predictions of any classifier with a local interpretable model.",
+    href: "https://arxiv.org/abs/1602.04938",
+    linkLabel: "View paper",
+  },
+];
+
+const projects: Project[] = [
   {
     icon: "cpu",
     title: "Chip 8 Emulator",
@@ -241,18 +305,6 @@ const projects: {
     linkLabel: "Problem statement",
   },
   {
-    icon: "database",
-    title: "Natural Language to SQL Translation",
-    type: "DBMS Course Project",
-    status: "Complete",
-    year: "2026",
-    description:
-      "Implemented, trained and tested `RAT-SQL` with relation-aware schema encoding and contextual BERT embeddings, reaching 67.0% exact-match on Spider across 200+ databases, with an AST-based grammar decoder generating executable SQL at up to 86.0% correctness",
-    stack: "Python · PyTorch · BERT",
-    href: "https://arxiv.org/abs/1911.04942",
-    linkLabel: "View paper",
-  },
-  {
     icon: "camera",
     title: "Multi-Frame Visual Odometry",
     type: "AGV project",
@@ -284,17 +336,6 @@ const projects: {
       "Built a UDP sender and receiver with forward error correction behind a pluggable `Encoder` interface. Sliding-window Reed-Solomon over GF(256) with joint Gaussian-elimination decoding recovers back-to-back losses, keeping deadline misses under 0.3% at 100ms delay within a 2x bandwidth cap",
     stack: "C · Python",
     href: "https://github.com/uday-kalyan-s/plivo-systems-24AI10014",
-  },
-  {
-    icon: "image",
-    title: "Wasserstein GAN",
-    type: "DL foundations course project",
-    status: "Complete",
-    year: "2026",
-    description:
-      "Ported the reference `WassersteinGAN` implementation off deprecated PyTorch APIs and trained it on CIFAR-10, using the critic's Wasserstein estimate as a stable training signal",
-    stack: "Python · PyTorch",
-    href: "https://github.com/uday-kalyan-s/WassersteinGAN",
   },
   {
     icon: "puzzle",
@@ -329,6 +370,15 @@ const projects: {
     stack: "Python · XGBoost · SHAP · Streamlit",
     href: "https://github.com/uday-kalyan-s/Asteroid-collision-Analytics",
   },
+  {
+    icon: "image",
+    title: "Olivetti Faces Compression",
+    type: "Linear Algebra for AIML course project",
+    status: "Complete",
+    year: "2026",
+    description: "Compressed the Olivetti Faces dataset by implementing `NMF`, `SVD`, `PCA` and other dimensionality reduction methods.",
+    stack: "Python · NumPy",
+  },
 ];
 
 function renderDescription(description: string) {
@@ -359,6 +409,39 @@ function ThemeButton({
   );
 }
 
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <article className="project-card">
+    <div className="project-topline">
+      <div className="project-mark">
+        <Icon name={project.icon} size={20} />
+      </div>
+      <div className="project-status">
+        <span className={`status-pill ${project.status.toLowerCase()}`}>
+          {project.status}
+        </span>
+        <time>{project.year}</time>
+      </div>
+    </div>
+    <div className="project-title-row">
+      <h3>{project.title}</h3>
+      <span className="project-type">{project.type}</span>
+    </div>
+    <p className="project-description">{renderDescription(project.description)}</p>
+    <div className="project-footer">
+      <span>{project.stack}</span>
+      {project.href ? (
+        <a href={project.href} aria-label={`${project.linkLabel ?? "View project"}: ${project.title}`}>
+          {project.linkLabel ?? "View project"} <Icon name="arrow" size={16} />
+        </a>
+      ) : (
+        <span className="project-link-note">{project.linkNote}</span>
+      )}
+    </div>
+  </article>
+  );
+}
+
 function SectionHeading({ eyebrow, title }: { eyebrow?: string; title: string }) {
   return (
     <div className={eyebrow ? "section-heading" : "section-heading no-eyebrow"}>
@@ -380,7 +463,7 @@ export default function App() {
   }, [isLight]);
 
   useEffect(() => {
-    const sectionIds = ["home", "publications", "projects"];
+    const sectionIds = ["home", "publications", "projects", "paper-reviews"];
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -444,6 +527,13 @@ export default function App() {
               aria-current={activeSection === "projects" ? "page" : undefined}
             >
               Projects
+            </a>
+            <a
+              className={activeSection === "paper-reviews" ? "nav-link active" : "nav-link"}
+              href="#paper-reviews"
+              aria-current={activeSection === "paper-reviews" ? "page" : undefined}
+            >
+              Paper reviews
             </a>
             <span
               className="nav-indicator"
@@ -532,42 +622,31 @@ export default function App() {
           <SectionHeading title="Projects" />
           <div className="project-grid">
             {projects.map((project) => (
-              <article className="project-card" key={project.title}>
-                <div className="project-topline">
-                  <div className="project-mark">
-                    <Icon name={project.icon} size={20} />
-                  </div>
-                  <div className="project-status">
-                    <span className={`status-pill ${project.status.toLowerCase()}`}>
-                      <i className="status-dot" />
-                      {project.status}
-                    </span>
-                    <time>{project.year}</time>
-                  </div>
-                </div>
-                <div className="project-title-row">
-                  <h3>{project.title}</h3>
-                  <span className="project-type">{project.type}</span>
-                </div>
-                <p className="project-description">{renderDescription(project.description)}</p>
-                <div className="project-footer">
-                  <span>{project.stack}</span>
-                  {project.href ? (
-                    <a href={project.href} aria-label={`${project.linkLabel ?? "View project"}: ${project.title}`}>
-                      {project.linkLabel ?? "View project"} <Icon name="arrow" size={16} />
-                    </a>
-                  ) : (
-                    <span className="project-link-note">{project.linkNote}</span>
-                  )}
-                </div>
-              </article>
+              <ProjectCard project={project} key={project.title} />
+            ))}
+          </div>
+        </section>
+
+        <section className="page-section projects-section" id="paper-reviews">
+          <SectionHeading title="Paper reviews" />
+          <p className="section-description">
+            Paper readings done for course projects.
+          </p>
+          <div className="project-grid">
+            {paperReviews.map((project) => (
+              <ProjectCard project={project} key={project.title} />
             ))}
           </div>
         </section>
       </main>
 
       <footer>
-        <p>Designed for lost causes</p>
+        <p>
+          Designed with{" "}
+          <a href="https://www.nordtheme.com/" target="_blank" rel="noreferrer">
+            Nord theme
+          </a>
+        </p>
         <span>© 2026 Uday Kalyan S</span>
       </footer>
     </div>
