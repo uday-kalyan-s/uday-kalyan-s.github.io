@@ -1,33 +1,14 @@
-import { useEffect, useState, type ReactNode } from "react";
-import pubThumbnail from "../static/images/pub1.png";
-import profilePhoto from "../static/images/PFP.jpeg";
-import navIcon from "../static/images/icon.png";
+import { useEffect, useState, type ReactNode } from "react"
+import pubThumbnail from "../static/images/pub1.png"
+import profilePhoto from "../static/images/PFP.jpeg"
+import navIcon from "../static/images/icon.png"
 // commebt
-type IconName =
-  | "arrow"
-  | "bot"
-  | "camera"
-  | "code"
-  | "cpu"
-  | "database"
-  | "github"
-  | "google"
-  | "image"
-  | "graph"
-  | "linkedin"
-  | "mail"
-  | "moon"
-  | "orbit"
-  | "pin"
-  | "puzzle"
-  | "resume"
-  | "sun"
-  | "wave";
+type IconName = "arrow" | "bot" | "camera" | "code" | "cpu" | "database" | "github" | "google" | "image" | "graph" | "linkedin" | "mail" | "moon" | "orbit" | "pin" | "puzzle" | "resume" | "sun" | "wave"
 
 type IconProps = {
-  name: IconName;
-  size?: number;
-};
+  name: IconName
+  size?: number
+}
 
 const iconPaths: Record<IconName, ReactNode> = {
   arrow: (
@@ -146,7 +127,7 @@ const iconPaths: Record<IconName, ReactNode> = {
       <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41" />
     </>
   ),
-};
+}
 
 function Icon({ name, size = 18 }: IconProps) {
   return (
@@ -157,27 +138,64 @@ function Icon({ name, size = 18 }: IconProps) {
       viewBox="0 0 24 24"
       width={size}
     >
-      <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8">
+      <g
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      >
         {iconPaths[name]}
       </g>
     </svg>
-  );
+  )
 }
 
-const socials: { label: string; detail: string; icon: IconName; href: string }[] = [
-  { label: "Gmail", detail: "udaykalyansreenivasa@gmail.com", icon: "mail", href: "mailto:udaykalyansreenivasa@gmail.com" },
-  { label: "IIT KGP Mail", detail: "udaykalyan.24@kgpian.iitkgp.ac.in", icon: "mail", href: "mailto:udaykalyan.24@kgpian.iitkgp.ac.in" },
-  { label: "GitHub", detail: "@uday-kalyan-s", icon: "github", href: "https://github.com/uday-kalyan-s" },
-  { label: "Scholar", detail: "Publications", icon: "google", href: "https://scholar.google.com/citations?user=CNqSZP0AAAAJ&hl=en" },
-  { label: "LinkedIn", detail: "Connect", icon: "linkedin", href: "https://www.linkedin.com/in/uday-kalyan-sreenivasa-196550203" },
-  { label: "Résumé", detail: "View PDF", icon: "resume", href: "../static/pdfs/CV.pdf" },
-];
+const socials: { label: string detail: string icon: IconName href: string }[] =
+  [
+    {
+      label: "Gmail",
+      detail: "udaykalyansreenivasa@gmail.com",
+      icon: "mail",
+      href: "mailto:udaykalyansreenivasa@gmail.com",
+    },
+    {
+      label: "IIT KGP Mail",
+      detail: "udaykalyan.24@kgpian.iitkgp.ac.in",
+      icon: "mail",
+      href: "mailto:udaykalyan.24@kgpian.iitkgp.ac.in",
+    },
+    {
+      label: "GitHub",
+      detail: "@uday-kalyan-s",
+      icon: "github",
+      href: "https://github.com/uday-kalyan-s",
+    },
+    {
+      label: "Scholar",
+      detail: "Publications",
+      icon: "google",
+      href: "https://scholar.google.com/citations?user=CNqSZP0AAAAJ&hl=en",
+    },
+    {
+      label: "LinkedIn",
+      detail: "Connect",
+      icon: "linkedin",
+      href: "https://www.linkedin.com/in/uday-kalyan-sreenivasa-196550203",
+    },
+    {
+      label: "Résumé",
+      detail: "View PDF",
+      icon: "resume",
+      href: "../static/pdfs/CV.pdf",
+    },
+  ]
 
 const publications = [
   {
     image: pubThumbnail,
     imageAlt: "Shielding-based diffusion planner caching figure",
-    title: "Kill the Rollouts: Online Caching Optimization for Shielding-Based Diffusion Planners",
+    title:
+      "Kill the Rollouts: Online Caching Optimization for Shielding-Based Diffusion Planners",
     authors: "Uday Kalyan S, Varuni Buereddy, Ravi Prakash",
     year: "2026",
     venue: "AIM Ctrl Workshop · IROS",
@@ -185,20 +203,20 @@ const publications = [
     description:
       "cache safety certificates for grid cells of the state space so that shielding based diffusion planners can skip redundant backup rollouts, cutting planning time by up to 2x with zero safety violations.",
   },
-];
+]
 
 type Project = {
-  icon: IconName;
-  title: string;
-  type: string;
-  status: "Active" | "Complete" | "Stale";
-  year: string;
-  description: string;
-  stack?: string;
-  href?: string;
-  linkLabel?: string;
-  linkNote?: string;
-};
+  icon: IconName
+  title: string
+  type: string
+  status: "Active" | "Complete" | "Stale"
+  year: string
+  description: string
+  stack?: string
+  href?: string
+  linkLabel?: string
+  linkNote?: string
+}
 
 const paperReviews: Project[] = [
   {
@@ -207,7 +225,8 @@ const paperReviews: Project[] = [
     type: "DBMS Course Project",
     status: "Complete",
     year: "2025",
-    description: "Trained and tested `RAT-SQL` on the Spider text-to-SQL benchmark.",
+    description:
+      "Trained and tested `RAT-SQL` on the Spider text-to-SQL benchmark.",
     href: "https://arxiv.org/abs/1911.04942",
     linkLabel: "View paper",
   },
@@ -237,7 +256,8 @@ const paperReviews: Project[] = [
     type: "Interpretable ML course",
     status: "Active",
     year: "2026",
-    description: "Reading Network Dissection, which labels individual units of a CNN with human-interpretable concepts.",
+    description:
+      "Reading Network Dissection, which labels individual units of a CNN with human-interpretable concepts.",
     href: "https://arxiv.org/abs/1704.05796",
     linkLabel: "View paper",
   },
@@ -247,7 +267,8 @@ const paperReviews: Project[] = [
     type: "Robot Autonomy course",
     status: "Active",
     year: "2026",
-    description: "Reading convex model-predictive control for dynamic locomotion on the MIT Cheetah 3.",
+    description:
+      "Reading convex model-predictive control for dynamic locomotion on the MIT Cheetah 3.",
     linkNote: "No link yet",
   },
   {
@@ -256,11 +277,12 @@ const paperReviews: Project[] = [
     type: "Introduction to ML course",
     status: "Complete",
     year: "2025",
-    description: "Reviewed LIME, which explains individual predictions of any classifier with a local interpretable model.",
+    description:
+      "Reviewed LIME, which explains individual predictions of any classifier with a local interpretable model.",
     href: "https://arxiv.org/abs/1602.04938",
     linkLabel: "View paper",
   },
-];
+]
 
 const projects: Project[] = [
   {
@@ -280,7 +302,8 @@ const projects: Project[] = [
     type: "Personal",
     status: "Complete",
     year: "2024",
-    description: "Emulated 31 instructions of the chip 8 emulator with the screen and timer in Rust",
+    description:
+      "Emulated 31 instructions of the chip 8 emulator with the screen and timer in Rust",
     stack: "Rust",
     href: "https://github.com/uday-kalyan-s/chip8",
   },
@@ -290,7 +313,8 @@ const projects: Project[] = [
     type: "Open-Source Contribution",
     status: "Complete",
     year: "2026",
-    description: "With the help of a PhD in NUS, implemented PEGASUS algorithm on `open-rmf/mapf`",
+    description:
+      "With the help of a PhD in NUS, implemented PEGASUS algorithm on `open-rmf/mapf`",
     stack: "Python · NumPy",
     href: "https://github.com/open-rmf/mapf/pulls?q=is%3Apr+author%3Auday-kalyan-s",
   },
@@ -300,7 +324,8 @@ const projects: Project[] = [
     type: "Open-source Maintainer",
     status: "Active",
     year: "2026",
-    description: "Designed responsive layout and current Maintainer for `metakgp/WIMP` helping IIT KGP students",
+    description:
+      "Designed responsive layout and current Maintainer for `metakgp/WIMP` helping IIT KGP students",
     stack: "CSS . TypeScript",
     href: "https://github.com/metakgp/wimp",
   },
@@ -310,7 +335,8 @@ const projects: Project[] = [
     type: "Competition",
     status: "Complete",
     year: "2025",
-    description: "Build a real-time warehouse navigation autonomous bot with capacity of scanning racks upto 2m",
+    description:
+      "Build a real-time warehouse navigation autonomous bot with capacity of scanning racks upto 2m",
     stack: "ROS2",
     href: "https://criticic.github.io/InterIIT-TechMeet-Problem-Statements/InterIIT_Tech_Meet_PDFs/2025_MidPrep_Eternal.pdf",
     linkLabel: "Problem statement",
@@ -387,24 +413,29 @@ const projects: Project[] = [
     type: "Linear Algebra for AIML course project",
     status: "Complete",
     year: "2026",
-    description: "Compressed the Olivetti Faces dataset by implementing `NMF`, `SVD`, `PCA` and other dimensionality reduction methods.",
+    description:
+      "Compressed the Olivetti Faces dataset by implementing `NMF`, `SVD`, `PCA` and other dimensionality reduction methods.",
     stack: "Python · NumPy",
   },
-];
+]
 
 function renderDescription(description: string) {
-  const parts = description.split("`");
+  const parts = description.split("`")
   return parts.map((part, index) =>
-    index % 2 === 1 ? <code key={index}>{part}</code> : <span key={index}>{part}</span>,
-  );
+    index % 2 === 1 ? (
+      <code key={index}>{part}</code>
+    ) : (
+      <span key={index}>{part}</span>
+    ),
+  )
 }
 
 function ThemeButton({
   isLight,
   onClick,
 }: {
-  isLight: boolean;
-  onClick: () => void;
+  isLight: boolean
+  onClick: () => void
 }) {
   return (
     <button
@@ -417,29 +448,38 @@ function ThemeButton({
         <Icon name={isLight ? "moon" : "sun"} size={19} />
       </span>
     </button>
-  );
+  )
 }
 
-const byYear = (items: Project[]) => [...items].sort((a, b) => Number(b.year) - Number(a.year));
+const byYear = (items: Project[]) =>
+  [...items].sort((a, b) => Number(b.year) - Number(a.year))
 
 function linkText(project: Project) {
-  if (project.linkLabel) return project.linkLabel.toLowerCase();
-  return project.href?.includes("github.com") ? "code" : "link";
+  if (project.linkLabel) return project.linkLabel.toLowerCase()
+  return project.href?.includes("github.com") ? "code" : "link"
 }
 
 function ProjectCard({ project }: { project: Project }) {
-  const meta = [project.type, project.year, project.stack].filter(Boolean).join(" · ");
+  const meta = [project.type, project.year, project.stack]
+    .filter(Boolean)
+    .join(" · ")
   return (
     <article className="project-item">
       <h3>{project.title}</h3>
       <p className="project-meta">
         {meta}
-        {project.status !== "Complete" ? ` · ${project.status.toLowerCase()}` : ""}
+        {project.status !== "Complete"
+          ? ` · ${project.status.toLowerCase()}`
+          : ""}
       </p>
       <p className="project-description">
         {renderDescription(project.description)}{" "}
         {project.href ? (
-          <a className="project-link" href={project.href} aria-label={`${linkText(project)}: ${project.title}`}>
+          <a
+            className="project-link"
+            href={project.href}
+            aria-label={`${linkText(project)}: ${project.title}`}
+          >
             [{linkText(project)}]
           </a>
         ) : project.linkNote ? (
@@ -447,43 +487,49 @@ function ProjectCard({ project }: { project: Project }) {
         ) : null}
       </p>
     </article>
-  );
+  )
 }
 
-function SectionHeading({ eyebrow, title }: { eyebrow?: string; title: string }) {
+function SectionHeading({
+  eyebrow,
+  title,
+}: {
+  eyebrow?: string
+  title: string
+}) {
   return (
     <div className={eyebrow ? "section-heading" : "section-heading no-eyebrow"}>
       {eyebrow ? <span className="section-number">{eyebrow}</span> : null}
       <h2>{title}</h2>
       <span className="heading-line" />
     </div>
-  );
+  )
 }
 
 export default function App() {
-  const [isLight, setIsLight] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [isLight, setIsLight] = useState(false)
+  const [activeSection, setActiveSection] = useState("home")
 
   useEffect(() => {
-    document.documentElement.dataset.theme = isLight ? "light" : "dark";
-  }, [isLight]);
+    document.documentElement.dataset.theme = isLight ? "light" : "dark"
+  }, [isLight])
 
   useEffect(() => {
-    const sectionIds = ["home", "publications", "projects", "paper-reviews"];
+    const sectionIds = ["home", "publications", "projects", "paper-reviews"]
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
         }
       },
       { rootMargin: "-40% 0px -55% 0px" },
-    );
+    )
     for (const id of sectionIds) {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
+      const element = document.getElementById(id)
+      if (element) observer.observe(element)
     }
-    return () => observer.disconnect();
-  }, []);
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="site-shell">
@@ -494,34 +540,53 @@ export default function App() {
           </a>
           <div className="nav-actions">
             <a
-              className={activeSection === "home" ? "nav-link active" : "nav-link"}
+              className={
+                activeSection === "home" ? "nav-link active" : "nav-link"
+              }
               href="#home"
               aria-current={activeSection === "home" ? "page" : undefined}
             >
               Home
             </a>
             <a
-              className={activeSection === "publications" ? "nav-link active" : "nav-link"}
+              className={
+                activeSection === "publications"
+                  ? "nav-link active"
+                  : "nav-link"
+              }
               href="#publications"
-              aria-current={activeSection === "publications" ? "page" : undefined}
+              aria-current={
+                activeSection === "publications" ? "page" : undefined
+              }
             >
               Publications
             </a>
             <a
-              className={activeSection === "projects" ? "nav-link active" : "nav-link"}
+              className={
+                activeSection === "projects" ? "nav-link active" : "nav-link"
+              }
               href="#projects"
               aria-current={activeSection === "projects" ? "page" : undefined}
             >
               Projects
             </a>
             <a
-              className={activeSection === "paper-reviews" ? "nav-link active" : "nav-link"}
+              className={
+                activeSection === "paper-reviews"
+                  ? "nav-link active"
+                  : "nav-link"
+              }
               href="#paper-reviews"
-              aria-current={activeSection === "paper-reviews" ? "page" : undefined}
+              aria-current={
+                activeSection === "paper-reviews" ? "page" : undefined
+              }
             >
               Paper reviews
             </a>
-            <ThemeButton isLight={isLight} onClick={() => setIsLight((value) => !value)} />
+            <ThemeButton
+              isLight={isLight}
+              onClick={() => setIsLight((value) => !value)}
+            />
           </div>
         </nav>
       </header>
@@ -529,7 +594,10 @@ export default function App() {
       <main>
         <section className="hero page-section" id="home">
           <div className="hero-grid">
-            <div className="portrait-wrap" aria-label="Profile picture of Uday Kalyan S">
+            <div
+              className="portrait-wrap"
+              aria-label="Profile picture of Uday Kalyan S"
+            >
               <div className="portrait">
                 <img
                   className="portrait-photo"
@@ -540,17 +608,35 @@ export default function App() {
             </div>
 
             <div className="hero-copy">
-              <h1>Uday Kalyan S</h1>
-              <ul className="designation-list">
-                <li>B.Tech (pre-final year) in AI, <strong>IIT Kharagpur</strong></li>
-                <li>Incoming SWE Intern, <strong>Stripe</strong></li>
-                <li>Planning &amp; Controls Head, <strong>AGV Research Group</strong></li>
-                <li>Executive Head, <strong>Kharagpur Open Source Society</strong></li>
-              </ul>
+              <div className="hero-id">
+                <h1>Uday Kalyan S</h1>
+                <ul className="designation-list">
+                  <li>
+                    B.Tech (pre-final year) in AI,{" "}
+                    <strong>IIT Kharagpur</strong>
+                  </li>
+                  <li>
+                    Incoming SWE Intern, <strong>Stripe</strong>
+                  </li>
+                  <li>
+                    Planning &amp; Controls Head,{" "}
+                    <strong>AGV Research Group</strong>
+                  </li>
+                  <li>
+                    Executive Head,{" "}
+                    <strong>Kharagpur Open Source Society</strong>
+                  </li>
+                </ul>
+              </div>
               <p className="social-row">
                 {socials.map((social, index) => (
                   <span key={social.label}>
-                    {index > 0 ? <span className="social-sep" aria-hidden="true"> · </span> : null}
+                    {index > 0 ? (
+                      <span className="social-sep" aria-hidden="true">
+                        {" "}
+                        ·{" "}
+                      </span>
+                    ) : null}
                     <a href={social.href} title={social.detail}>
                       {social.label}
                     </a>
@@ -561,8 +647,9 @@ export default function App() {
           </div>
 
           <p className="about">
-            I’m a student at IIT Kharagpur. I like working in robotics, deep learning, software
-            development, and anything and everything you can think of.
+            I’m a student at IIT Kharagpur. I like working in robotics, deep
+            learning, software development, and anything and everything you can
+            think of.
           </p>
         </section>
 
@@ -572,7 +659,11 @@ export default function App() {
             {publications.map((publication) => (
               <article className="publication-card" key={publication.title}>
                 <div className="paper-thumb">
-                  <img src={publication.image} alt={publication.imageAlt} loading="lazy" />
+                  <img
+                    src={publication.image}
+                    alt={publication.imageAlt}
+                    loading="lazy"
+                  />
                 </div>
                 <div className="publication-copy">
                   <h3>{publication.title}</h3>
@@ -621,5 +712,5 @@ export default function App() {
         <span>© 2026 Uday Kalyan S</span>
       </footer>
     </div>
-  );
+  )
 }

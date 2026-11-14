@@ -500,15 +500,40 @@ footer p {
     padding: 2.75rem 0;
   }
 
+  .hero {
+    padding-top: 7rem;
+  }
+
   .hero-grid {
-    grid-template-columns: 6.5rem minmax(0, 1fr);
+    grid-template-columns: 8.25rem minmax(0, 1fr);
+    grid-template-areas:
+      "photo name"
+      "links links";
     gap: 1.25rem;
     align-items: start;
   }
 
+  .portrait-wrap {
+    grid-area: photo;
+  }
+
+  .hero-copy {
+    display: contents;
+  }
+
+  .hero-copy > .hero-id {
+    grid-area: name;
+  }
+
+  .hero-copy > .social-row {
+    grid-area: links;
+    margin: 0;
+  }
+
   .portrait {
-    width: 6.5rem;
-    height: 8rem;
+    width: 8.25rem;
+    height: auto;
+    aspect-ratio: 9.5 / 11.5;
   }
 
   h1 {
@@ -533,6 +558,16 @@ footer p {
     width: min(100% - 2rem, 44rem);
     gap: 1rem;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-actions {
+    gap: 0.8rem;
+  }
+
+  .nav-link {
+    font-size: 0.7rem;
   }
 }
 
