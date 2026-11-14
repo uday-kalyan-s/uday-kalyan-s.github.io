@@ -264,6 +264,17 @@ const paperReviews: Project[] = [
 
 const projects: Project[] = [
   {
+    icon: "database",
+    title: "KV-Cache Relay Between Small LLM Agents",
+    type: "Foundations of LLMs course project",
+    status: "Complete",
+    year: "2026",
+    description:
+      "Built a KV-cache relay between frozen `Qwen2.5-0.5B` agents with a 0.49M-param learned retriever, gaining +6.2 to +13.3 F1 over `CacheBack` at equal budget",
+    stack: "PyTorch · Transformers",
+    linkNote: "No link yet",
+  },
+  {
     icon: "cpu",
     title: "Chip 8 Emulator",
     type: "Personal",
